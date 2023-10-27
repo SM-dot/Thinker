@@ -1,0 +1,78 @@
+// problem 20 leetcode link - https://leetcode.com/problems/valid-parentheses/description/
+import java.util.*;
+class Solution {
+    public boolean isValid(String s) 
+    {
+        /**
+        UNDERSTANDING THE QUESTION:
+        Input: a string of special characters that only consists of parenthesis 
+        Output: a boolean value that tells you if the parenthesis have been used properly 
+
+
+
+        APPROACH:
+        The examples for this question are very straightforward but in order to solve the problem let's think of a little bit more complicated example:
+        ({[]}) by looking at it we obviously know that it is valid, but let's break it down further. 
+        if we had ({[)}) something like this then we would know by looking at the first closing bracket that the sequence is not valid because [ is being closed incorrectly. 
+
+        This means that in order to tell if a sequence is valid or not we must look at the closing parenthesis. 
+
+        Ok so we have something now, we need to look at the closing parenthesis. Now what are we comparing this to? We are comparing the closing parenthesis to the parethesis right beofre it. 
+
+        ({[ ]       })
+
+        if the closing parenthesis matches/ has the correct opening parenthesis before it then we are all good to go. Since we have found a matching pair it means that this one would defintely be valid and we do not need to hold on to it/ check it any longer. 
+
+        We can see here that a stack might be a good option to solve this problem as we need the last most recent element which can be analogous to the top of a stack. However, this is till just a speculation. Let's try out an approach wusing a stack. 
+
+
+        1. In our stack we fill it with all the opening parenthesis
+        2. Whenever we encounter a closing parentheis we see if it matches the top of the stack as that would be the most recent elemtn
+        3. If it does not match thenw e return false
+        4. if it matches we remove the parenthesis we just solved for out of the stack
+
+
+        How do we matcn the parenthesis but? If we lok on our keyboard we dont have more than 3 types, so let's just use a data structure to store the matching correct parenthesis. Let's use a hashmap for convieinience over here. The key would be the closing parenthesis. 
+
+        let's code this!
+         */
+
+
+         // first create a hashmap which stores the valid parenthesis 
+         Map<Character, Character> data = new HashMap<>();
+         data.put('}', '{' );
+         data.put(']', '[' );
+         data.put(')', '(' );
+
+        //create your stack in which the opening parenthesis will be stored
+        Stack<Character> stack = new Stack<>();
+
+         //now we iterate through the string and get each character
+         for(char c: s.toCharArray())
+         {
+             //checking if we have a closing parenthesis or not 
+             if (data.containsKey(c))
+             {
+                // System.out.println("Stack: " + stack);
+                 if(!stack.isEmpty() && stack.peek() == data.get(c) )
+                 {
+                     stack.pop();
+                 }
+                 else
+                 {
+                    return false;
+                 }
+             }
+             //if it is an opening parenthesis then simply addit to your stack
+             else
+             {
+             stack.push(c);
+             }
+         }
+
+
+         return stack.isEmpty();
+
+
+    }
+}
