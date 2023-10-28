@@ -1,0 +1,49 @@
+// problem link, leetcode 217 - https://leetcode.com/problems/contains-duplicate/
+import java.util.*;
+class Solution {
+    public boolean containsDuplicate(int[] nums) {
+    
+    /**
+    UNDERSTANDING THE PROBLEM:
+    Input: integer array called nums
+    Output: Boolean value true or false
+    true - when atleast once value appearce 2 times or more in the array
+    false - all elements are unique
+
+
+    MY APPROACH: 
+    There can be many approaches to the problem
+  
+    1. Quick simple fast way:
+    We know that a set data structure holds no duplicate values
+    if we put the array in a set then check the length of the set
+    if the length of the set is the same as the original array it means that it has all unique elements and we return true
+    if the lenght of the set decreases from the lenght of the array then it means that the set had duplicate values so we return false
+
+
+    2. Using hashmap:
+    Basically what is the question asking one level lower to the output?
+    we need to know the frequency of each element, in order to know the frequency of the element we can do so by making each element in the array as the key and the number of times it occurs as the value. This will take O(n) time 
+
+
+    3. Brute force approach (INSTINCTIVELY FIRST APPROACH - SIMPLEST WAY TO SOLVE)
+    take the first element and then scan through the array if you do not find a duplicate or the same number at a different position then return false, if you do continue the process with the next number in the array
+
+    let's code!
+     */
+
+    Set<Integer> set = new HashSet<>();
+
+    for(int element: nums)
+    {
+        set.add(element);
+    }
+
+    if(set.size() == nums.length) 
+        return false; 
+    else 
+        return true; 
+
+
+    }
+}
