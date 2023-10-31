@@ -1,0 +1,67 @@
+//Leetcode Problem 125 link - https://leetcode.com/problems/valid-palindrome/description/
+class Solution {
+    public boolean isPalindrome(String s) {
+        /**
+        UNDERSTANDING THE PROBLEM:
+        Input: Sentence
+        Output: Boolean Value 
+        True -> sentence is a palindrome 
+        False -> not a palindrome
+        Palindrome:
+        1. Converting all uppercase letters to lowercase letters
+        Ask the interviewer: do I need to convert all lower to upper as well? 
+        2. Remove all alphanumeric characters
+        Ask the interviewer: whitespaces as well?
+        3. check if the word is the same from front to back
+
+
+        APPROACH: 
+        There are many ways to go about solving this question but let's discuss 2 most high level approachs:
+        1. Meet the alphanumeric and lowercase requirements before checking for palindrome(personally I prefer this just becuase of the ease for someone else to follow it)
+            create a new string and on this check if it is palindrome or not
+        2. While you are checking for palindrome check for alphanumeric and lower case
+            checking as you parse the string 
+
+        I will be going with the first approach for simplicity. There is no right or wrong here just depends on the requirements.
+
+        Solving for alphanumeric & lowercase requirement:
+        Again there are 2 approaches here - 
+        1. Using the in-built functions such as toLowerCase, isAlphanumeric, etc
+        2. Utilizing ASCII characters
+            for example we know that for a-z the ascii values are 65-90 so we convert the character to the ASCII value using (int ascii = (int) character) syntax and then see if it falls in the ranges. Please note that I have mentioned rangeS here as alphanumeric means that the character can be a number or a lowercase character. To check or convert to lowercase character simply first check if it falls in the lower case ascii ranges or not. If it does not then add (97-65 as A = 65 and a = 97) to the value and convert back to integer. 
+            For the ease of problem solving let's use the inbuilt functions as method 2 is straughtforward math but if you want to practice ascci conversions and want to get comfortable with it please go ahead with method 2. ASCII is nothing but an intger representation of a character. This integer representation further gets converted to a bit represnetation which means that it is represented as 0's and 1's. 
+            Let's say a is represented in ascii as 3. While you use 3 while programming under the hood it is further broken down as 0000000000000011 and this is further broken down into gates(AND, OR, NAND, NOR, NOT, ADDERS, etc)
+
+
+        Solving for palindrome:
+        Ok, so let's understand what paindrome means first. When we try to solve without any code we are basically always compaing the first and last character in the string. So we can take left and right pointers. For odd length words there will be a point where the left pointer is equal to the right pointer and if all letters matched on the left and right hand side, we can proceed to say that we found a palindrome. However, if we have an even length word then we will know we have found a palindrome word if the left pointer and right pointer switch positions while parsing. In order to address words of even and odd length we can come up with a single condition that left pointer < right pointer while parsing through the string.
+
+        Ok, now let's code!!
+         */
+
+
+         // FIRST CREATING OUR NEW STRING
+         String word = "";
+         for(char c: s.toCharArray())
+         {
+             if(Character.isLetterOrDigit(c))
+             {
+                 word = word + Character.toLowerCase(c);
+             }
+         }
+         //Now in word the word that we need to check if it is palindrome or not is stored and we have checked the conditions/requirements mentioned in the question. 
+
+         int left = 0;
+         int right = word.length() - 1;
+
+         while (left < right)
+         {
+             if(word.charAt(left) != word.charAt(right))
+                return false; 
+            left ++;
+            right --;
+         }
+
+         return true; 
+    }
+}
