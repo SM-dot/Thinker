@@ -1,0 +1,45 @@
+//LEETCODE PROBLEM 206 - LINK - https://leetcode.com/problems/reverse-linked-list/description/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        /**
+        This is a fairly straightforward question. They are 2 ways to approach it. 
+        1. Using another data structure to store the elements of the list and then outputting it in reverse order.
+        2. Use the linked list given and modify it
+
+        for approach 1 deciding in the best data structure to use is critical. Look at your tool box. You know about stacks, queue, arrays, linkedlist, bags, sets, hashmaps, etc. What are we trying to do here? In this question the order matters so we should remove bags and sets as they are randomized. If we have the head node it means that we can store the first element easily but we want the first element in our original string to come last so if we think which datat structure should have this property it is a stack! As stack follows the LIFO approach - Last In First Out
+
+        for appraoch 2 the best way to think about it is that you want to break the current bond between nodes 1 and 2. and make 1 point to null. At the same time you do not want tot lose the pointer to 2. In order to understand this better I am going to stop here and start coding or you can try it out on paper to gain a better intuitive sense for this. 
+
+        Let's code!
+         */
+
+         //Edge cases: what if head is null or what if only 1 element?
+         if(head == null || head.next == null)
+            return head;
+        
+        //actual core problem
+        ListNode prevNode = null;
+        ListNode currNode = head;
+        while(currNode != null)
+        {
+            ListNode future = currNode.next;
+            currNode.next = prevNode;
+            prevNode = currNode;
+            currNode = future;
+        }
+
+        return prevNode;
+
+        
+    }
+}
