@@ -1,0 +1,39 @@
+// Link to problem - https://leetcode.com/problems/container-with-most-water/description/
+class Solution {
+    public int maxArea(int[] height) {
+        /**
+        UNDERSTANDING THE PROBLEM:
+        We basically need to find the largest areas in terms of a rectangle from the given data. We are given an input of array to use. How do we solve this? Refer to the image given on leetcode for understanding the problem. It is pretty straightforward. 
+
+
+        APPROACH: 
+        A brute force approach would be to find the area of the rectangle for eahc and every interval/ bar graphs between the lines. 
+        BRUTE FORCE EXPALINED BETTER - 
+        Ok so for each of the graphs we calculate the area of all the combinations. For exampl if we take the first bar then the area we would have is 1, then 1 * 2 = 2 and so on an so forth. Intuitively this solution should work but it exceeds the time limit as you will be performing o(n square) operations. So let's find a better/ smarter/ optimised way to solve this.
+
+        Let's try using the 2's pointer methodology here. So if we begin on the 2 ends we can calculate the area. The formula for area will be width times the height. The width for each movement of the pointer is constant thus we need to focus on the height instead. So we move the pointer which is smaller amoingst the two left and right pointers thus maximising the area. Now let's code!
+         */
+
+         int left = 0;
+         int right = height.length - 1;
+         int area;
+         int ret = 0;
+
+         while (left < right)
+         {
+             area = (right - left) * Math.min(height[left], height[right]);
+             ret = Math.max(area, ret);
+
+             if(height[left] < height[right])
+             {
+                 left = left + 1;
+             }
+             else
+             {
+                 right = right - 1;
+             }
+         }
+
+         return ret;
+    }
+}
