@@ -1,0 +1,27 @@
+// leetcode problem: https://leetcode.com/problems/maximum-depth-of-binary-tree/
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    /**
+    Ok, think at a high level for tree questions. Abstract, form a story to solve the problem. Let's dive deeper into this problem while the solution is just 3 lines of code let's understand how we reach these three lines of code. Step 1 - draw the tree on a paper, now for each node calculate the depth. Soon you will start to see the pattern, the depth of a node is tha maximum of the depths of the left and right subtree + 1. Or another way to think about this problem would be, that whatever is the depth on the left side or right side(select the greatest one) then add my current node level to that which is 1 and you have your answer! W e are taking a recursive approcah here so think about the base case as well, if you have no nodes in the tree (your root is null) then the depth of the tree will be 0 as well, this is a good start for your base case. If we think of it in our whole story, we do not want to go or cannot go beyond a leaf node thus it is the ideal base case. Now let's code!
+
+     */
+    public int maxDepth(TreeNode root) {
+        if (root == null)
+            return 0;
+        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+    }
+}
