@@ -1,0 +1,78 @@
+//LEETCODE LINK - https://leetcode.com/problems/median-of-two-sorted-arrays/description/
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        //The approach that we plan to have is, first combine both the arrays in a sorted manner. Then if the number of elements in the sorted array are odd then simply return the middle value. If even then calculate it and return that value. 
+        // Time complexity (O(m + n))
+        // Space complexity would be higher here 
+        int l = nums1.length + nums2.length;
+        int m = nums1.length;
+        int n = nums2.length;
+        int[] merged_array = new int[m + n];
+
+
+        /*
+How our sorting works: 
+It is kind of like sliding window. If you do not know what that is, no need to worry. Let's dive deeper into the solution. Lets say our first array or nums1 is [1, 3] and 
+nums2 or second array is [2, 4]. In order to combine it let's say we have the first element of both the arrays in each of our hands. Since we want to solve in ascending order that is
+smallest to largest we will put the smaller value inside the box or the new merged_array that we aretrying to create. In this case you would have put '1' inside the box so your hand
+which was previosuly holding '1' is now empty. Now you can pick the next element from the nums1 array as your hand is empty, this would be element '3'. Remember that you are already
+holding the second element in your hand. Now compare these two again, so between 2 and 3 - 2 is smaller. So put down 2 in the merged_array box and with the empty hand pick the 
+other elemnt in nums2. So on and so forth you will be left with a sorted array tille both the nums1 and nums2 array boxes are not empty. 
+*/
+        int i = 0;
+        int j = 0;
+        for(int k = 0; k < l; k++)
+        {
+            if(i < m && j < n && nums1[i] <= nums2[j])
+            {
+                merged_array[k] = nums1[i];
+                i++;
+            }
+            else if(i < m && j < n && nums1[i] >= nums2[j])
+            {
+                merged_array[k] = nums2[j];
+                j++;
+            }
+            else if(i >= m && j < n)
+            {
+                for(int q = k; q < l; q++)
+                {
+                    merged_array[q] = nums2[j];
+                    j++;
+                }
+            }
+            else if(j >= n && i < m)
+            {
+                for(int q = k; q < l; q++)
+                {
+                    merged_array[q] = nums1[i];
+                    i++;
+                }
+            }
+
+        }
+
+
+        System.out.println("Printing the merged sorted array used for debugging: ");
+        for(int b = 0; b < l; b++ )
+        {
+            System.out.print(merged_array[b]);
+        }
+
+        System.out.println("");
+
+
+        if (l % 2 != 0)
+        {
+            return merged_array[l/2];
+        }
+
+        else
+        {
+            double sum = (double)(merged_array[l/2] + merged_array[l/2 - 1])/2;
+            return sum;
+        }
+
+
+    }
+}
