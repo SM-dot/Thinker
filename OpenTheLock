@@ -1,0 +1,79 @@
+// Leetcode Link: https://leetcode.com/problems/open-the-lock/description/
+// Problem Number: 752
+
+class Solution {
+public:
+    int openLock(vector<string>& deadends, string target) {
+        /*
+        very similar to the word ladder problem 
+        basically this is a graph problem 
+        how do we know that? 
+        we have a starting state "0000" and need to reach an ending state "target number"
+        we need to minimize this journey, aha BFS or level order traversal! 
+
+        use deadends as a visited array, to check if in deadends convert it to set as lookup in set is O(1) time thus reducing time complexity .
+        */
+
+         unordered_set<string> visited(begin(deadends), end(deadends));
+         queue<string> q;
+         int level = 0;
+         string start = "0000";
+         q.push(start);
+
+         // edge case
+         if (visited.find(start) != visited.end())
+            return -1;
+
+         while(!q.empty())
+         {
+            int n = q.size();
+            while(n --)
+            {
+                string element = q.front();
+                q.pop(); 
+
+                // now visiting the neoghbours and adding them to the q if they are not in visited/deadends
+                // neighbours means converting each string location from +1 or -1 and that is the next state
+                // 0 0 0 0 -> 9 0 0 0 or 1 0 0 0 will be the next state 
+                // 1 0 0 0 -> 2 0 0 0 or 0 0 0 0
+                // 1 0 0 0 -> 1 1 0 0 or 1 9 0 0
+                // 1 0 0 0 -> 1 0 1 0 or 1 0 9 0 .. so on for each state
+                // for each number each digit is increased +1 , -1 
+                // total combinations in worse case _ _ _ _ each blank can hold 10 numbers, lets say that is n thereforce t.c is 10^4 or n^w whre w is the number of wheels
+
+                if (element == target)
+                    return level; 
+
+                for(int i = 0; i < element.length(); i++)
+                {
+                    char temp = element[i]; 
+
+                    char inc = (temp == '9') ? '0' : temp + 1;
+                    char dec = (temp == '0') ? '9' : temp - 1;
+
+                    element[i] = inc; 
+                    if (visited.find(element) == visited.end())
+                    {
+                        q.push(element);
+                        visited.insert(element);
+                    }
+
+                    element[i] = dec;
+                    if (visited.find(element) == visited.end())
+                    {
+                        q.push(element);
+                        visited.insert(element);
+                    }
+
+                    element[i] = temp;
+                }
+
+            }
+
+            level += 1; 
+         }
+
+
+         return -1; 
+    }
+};
