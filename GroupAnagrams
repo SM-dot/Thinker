@@ -1,0 +1,75 @@
+// Leetcode Link: https://leetcode.com/problems/group-anagrams/
+// Probelem Number: 49
+
+class Solution {
+public:
+    /*
+    The `groupAnagrams` function groups a list of strings into anagram groups. 
+    It uses a frequency array (of size 26 for lowercase English letters) to represent each string's character frequencies. 
+    This frequency array is converted into a string (used as a map key) and stored in an unordered map where the key is the frequency string and the value is a list of anagrams (words having the same frequency). 
+    Finally, all anagram groups are collected into a result vector and returned.
+
+    Time Complexity:
+    - The outer loop iterates over all `n` words in the input list `strs`, where `n` is the size of `strs`.
+    - For each word, an inner loop runs for each of its `k` characters to populate the frequency array.
+    - Thus, the time complexity is O(n * k), where `n` is the number of strings and `k` is the average length of the strings.
+
+    Space Complexity:
+    - The space complexity is O(n * k) for storing the input strings in the result, where `n` is the number of words and `k` is the average length of each word.
+    - The unordered map also uses O(n * k) space in the worst case to store the anagram groups.
+    */
+
+    // Helper function to convert a frequency array into a string key
+    string vectorToString(vector<int>& arr) {
+        string s = "";
+        for (auto& num : arr) {
+            s += to_string(num) + "#";  // Use "#" as a delimiter between frequencies
+        }
+        return s;
+    }
+
+    // Main function to group anagrams
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, vector<string>> map;  // Map to store anagram groups by frequency string
+
+        // Iterate through each word in the input list `strs`
+        for (auto& word : strs) {
+            vector<int> arr(26, 0);  // Frequency array for the 26 lowercase English letters
+
+            // Calculate the frequency of each character in the word
+            for (auto& ch : word) {
+                arr[ch - 'a'] += 1;  // Update the frequency of the character
+            }
+
+            // Convert the frequency array to a string to use as a map key
+            string key = vectorToString(arr);
+            
+            // Add the word to the appropriate anagram group in the map
+            map[key].push_back(word);
+        }
+
+        // Collect the anagram groups into the result vector
+        vector<vector<string>> answer;
+        for (auto& p : map) {
+            answer.push_back(p.second);  // Each value in the map is a group of anagrams
+        }
+
+        return answer;  // Return the grouped anagrams
+    }
+};
+
+int main() {
+    Solution sol;
+    vector<string> input = {"eat", "tea", "tan", "ate", "nat", "bat"};
+    vector<vector<string>> result = sol.groupAnagrams(input);
+    
+    // Print the result
+    for (auto& group : result) {
+        for (auto& word : group) {
+            cout << word << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
