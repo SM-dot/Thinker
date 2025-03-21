@@ -64,3 +64,45 @@ public:
         return answer;
     }
 };
+
+
+/*
+Python Version: 
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        # The brute force method that might come to mind is to check from each cell if it can reach the Pacific ocean or atlantic ocean. However, that is too time consuming as you would visit each cell, then do a dfs to find paicific, then atlantic. 
+        # A more optimal solution by reverse engineering the approach is to start from the pacific ocean and atlantic ocean cells (we already know these as these are the borders). Do a traversal and store all the cells that can be reached from the atlantic and pacific ocean. 
+        # In the end compare the cells that are in the atlantic and pacific bag 
+        # Add those in the answer and return 
+
+        pacific = set()
+        atlantic = set()
+
+        rows = len(heights)
+        cols = len(heights[0])
+
+        directions = [[-1, 0], [0, 1], [0, -1], [1, 0]]
+
+        def dfs(i, j, visited):
+            visited.add((i, j))
+
+            for dir in directions:
+                newr = i + dir[0]
+                newc = j + dir[1]
+
+                if (newr in range(rows) and newc in range(cols) and heights[newr][newc] >= heights[i][j] and (newr, newc) not in visited):
+                    dfs(newr, newc, visited)
+
+            
+        # The top row for pacific and bottom for atlantic 
+        for i in range(cols):
+            dfs(0, i, pacific)
+            dfs(rows - 1, i, atlantic)
+        
+        # The left side for pacific and the right side for atlantic
+        for i in range(rows):
+            dfs(i, 0, pacific)
+            dfs(i, cols - 1, atlantic)
+        
+        return list(pacific & atlantic)
+*/
