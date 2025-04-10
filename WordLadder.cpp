@@ -74,3 +74,35 @@ public:
 
     }
 };
+/*
+Python Solution: 
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        q = deque()
+        q.append(beginWord)
+        wordList = set(wordList)
+
+        if endWord not in wordList:
+            return 0
+        
+        if beginWord in wordList:
+            wordList.remove(beginWord)
+        
+        sequence = 1
+        while q:
+            n = len(q)
+            for i in range(n):
+                element = q.popleft()
+                if element == endWord:
+                    return sequence 
+                
+                for index in range(len(element)):
+                    for ch in range(ord('a'),ord('z') + 1):
+                        mutation = element[:index] + chr(ch) + element[index+1:]
+                        if mutation in wordList:
+                            wordList.remove(mutation)
+                            q.append(mutation)
+            sequence += 1
+        return 0
+
+*/
