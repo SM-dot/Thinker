@@ -43,3 +43,36 @@ class Solution:
         return res
 
 
+# BFS Code: 
+class Solution:
+    def maximumDetonation(self, bombs: List[List[int]]) -> int:
+        n = len(bombs)
+        res = 0
+
+        def bfs(i):
+            q = deque()
+            q.append(i)
+            visited = set()
+            visited.add(i)
+            count = 0
+
+            while q:
+                bomb = q.popleft()
+                count += 1
+                x1, y1, r1 = bombs[bomb]
+
+                for index, bomb in enumerate(bombs):
+                    if index not in visited: 
+                        x2, y2, r2 = bomb
+                        d = sqrt((x2 - x1)**2 + (y2 - y1)**2)
+                        if d <= r1:
+                            q.append(index)
+                            visited.add(index)
+            return count 
+
+
+
+
+        for i in range(n):
+            res = max(res, bfs(i))
+        return res 
