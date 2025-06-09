@@ -52,3 +52,48 @@ public:
         return answer;
     }
 };
+
+
+/**
+Python Code using heap: 
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        freqMap = defaultdict(int)
+        for num in nums: 
+            freqMap[num] += 1
+        
+        heap = []
+        for element, freq in freqMap.items():
+            heapq.heappush(heap, (freq, element))
+            if len(heap) > k:
+                heapq.heappop(heap)
+        
+        return [element for (freq, element) in heap]
+
+        '''
+        Time Complexity of heap: 
+        heapify - o(n)
+        heap pop - o(logn)
+        heap push - o(logn)
+        heap peek - o(1)
+        Naturally heaps are min heap, to make it a max heap put the numbers in negative 
+
+       - You’re storing (freq, element) in the heap.
+       - Since it's a min-heap, the element with the smallest frequency stays on top.
+       - Once the heap grows larger than k, you remove the least frequent element.
+       - This ensures that only the top k most frequent elements remain.
+
+       Start with empty heap:
+
+        Push (3, 2) → heap = [(3, 2)]
+        Push (2, 3) → heap = [(2, 3), (3, 2)]
+        Heap size > 2? No. Move on.
+        Push (1, 4) → heap = [(1, 4), (3, 2), (2, 3)]
+        Now len(heap) > k → pop → pops (1, 4) (least freq)
+        Heap = [(2, 3), (3, 2)]
+        Push (1, 1) → heap = [(1, 1), (3, 2), (2, 3)]
+        Again, size > k → pop → remove (1, 1)
+        Final heap = [(2, 3), (3, 2)]
+        '''
+
+*/
