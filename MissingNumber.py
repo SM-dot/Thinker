@@ -1,5 +1,6 @@
 # Leetcode Link: https://leetcode.com/problems/missing-number/
 # Category: Bitwise 
+
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
         xor = 0 
@@ -15,3 +16,5 @@ class Solution:
             xor ^= num
         
         return xor
+
+#RV
