@@ -1,6 +1,6 @@
 # Leetcode 1615. Maximal Network Rank
 # https://leetcode.com/problems/maximal-network-rank/
-# Category: Graph, DFS, BFS - but no actual graph traversal algorithm is needed
+# Category: Graph, DFS, BFS - but no actual graph traversal algorithm eis needed
 class Solution:
     '''
     Simply follow the instrcutions of the question. Rank means the number of edges or roads
