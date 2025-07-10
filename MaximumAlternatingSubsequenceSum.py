@@ -42,6 +42,11 @@ class Solution:
         '''
         Recursion + Memoization Solution:
         T.C: O(2N)
+        S.C: O(N) - recursion stack + O(N) - memoization array
+        2N cause for each index we have 2 states - take or skip
+        2 states - take or skip
+        1 state - index
+        Total states = 2N
         '''
         n = len(nums)
         # t[n][2] [2] -> flag [n] -> index
