@@ -67,3 +67,33 @@ class Solution:
             return t[idx][flag]
         
         return solve(0, True)
+    
+
+class Solution:
+    def maxAlternatingSum(self, nums: List[int]) -> int:
+        '''
+        Brute force: 
+        find all subsequences(2^n time), for each subsequence find the alternating sum (n time)
+        T.C: O(2^N * N)
+
+        Bottom Up approach
+        T.C: O(2N)
+        '''
+        n = len(nums)
+        # t[n][2] [2] -> flag [n] -> index
+        # indexing 1...n
+        # t[i][even/odd] = whats the result when we take or skip the ith element such that forming an even/odd length subsequence 
+        t = [[0 for i in range(2)] for _ in range(n + 1)]
+
+        for i in range(1, n + 1):
+            # If taking/skipping the element at the ith index forms a subsequence of even length:     
+            #            taking element          skipping element
+            t[i][0] = max(t[i-1][1] - nums[i-1], t[i-1][0]) 
+
+
+            # If taking/skipping the element at the ith index forms a subsequence of odd length 
+            t[i][1] = max(t[i-1][0] + nums[i-1], t[i-1][1])
+        
+        # even length subsequence or odd length subsequence gives the answer 
+        return max(t[n][1], t[n][0])
+       
