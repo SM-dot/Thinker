@@ -71,4 +71,19 @@ class Solution:
         
         return solve(0, -1)
             
-        
+# Bottom Up DP
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        n = len(nums)
+        t = [1 for i in range(n)]
+        # t[i] = LIS ending at index i or abhi tak ka LIS
+
+        # cause longest LIS is atleast 1 {10}, {9} etc thats why keeping it 1, while empty set is possible obviously when u can have one element in it that would be the longest before we start computing
+        maxLIS = 1
+        for i in range(0, n):
+            for j in range(0, i):
+                if nums[i] > nums[j]:
+                    t[i] = max(t[i], t[j] + 1)
+                    maxLIS = max(maxLIS, t[i])
+                    
+        return maxLIS
