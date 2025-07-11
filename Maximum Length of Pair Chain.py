@@ -36,3 +36,20 @@ class Solution:
             return t[idx][prevIdx]
 
         return solve(0, -1)
+    
+# Bottom Up DP approach, TC: O(N^2), SC: O(N)
+class Solution:
+    def findLongestChain(self, pairs: List[List[int]]) -> int:
+        pairs.sort()
+        n = len(pairs)
+        t = [1 for _ in range(n + 1)]
+        # lenght of the longest subsequence seen till length i
+        maxLIS = 1
+
+        for i in range(n):
+            for j in range(0, i):
+                if pairs[i][0] > pairs[j][1]:
+                    t[i] = max(t[i], t[j] + 1)
+                    maxLIS = max(maxLIS, t[i])
+        return maxLIS
+
