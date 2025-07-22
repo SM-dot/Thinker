@@ -88,3 +88,28 @@ class Solution:
                     
         return maxLIS
 # Rev July 14th 2025
+
+# Patience Sorting + Binary Search
+# T.C: O(N log N)
+# S.C: O(N)
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        '''
+        This method is called as patience sorting, 
+        tc is O(nlogn)
+        logn -> for finding the clsoest number greater to current number
+        n -> traversing the array
+        '''
+        n = len(nums)
+        answer = []
+
+        for num in nums:
+            insertionIndex = bisect.bisect_left(answer, num)
+            if insertionIndex >= len(answer):
+                answer.append(num)
+            
+            else:
+                answer[insertionIndex] = num
+        
+        return len(answer)
