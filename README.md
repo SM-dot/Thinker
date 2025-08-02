@@ -1,6 +1,6 @@
 # Thinker - LeetCode Problem Solutions
 
-Welcome to the Thinker repository! This repository contains my solutions to various LeetCode problems in Java, C++ and Python. Each problem is explained step by step easily (pure simple easy to follow no fancy stuff), making it a valuable resource for learning and improving your problem-solving skills in Java.
+Welcome to the Thinker repository! This repository contains my solutions to various LeetCode problems in Java, C++ and Python. Each problem is explained step by step easily (pure simple easy to follow no fancy stuff), making it a valuable resource for learning and improving your problem-solving skills in Python.
 
 ## Table of Contents
 
