@@ -1,0 +1,44 @@
+# LeetCode 198. House Robber
+# Problem Link: https://leetcode.com/problems/house-robber/
+# Category: Dynamic Programming
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        '''
+        Input: List of non-negative integers representing the amount of money in each house
+        Operations: 
+           - Use dynamic programming to decide whether to rob a house or skip it
+           - Maintain a dp array where dp[i] represents the maximum amount that can be robbed up to house i
+           - For each house, decide to rob it (add its value to dp[i-2]) or skip it (take dp[i-1])
+        Output: Maximum amount of money that can be robbed without robbing two adjacent houses
+        T.C: O(N) where N is the number of houses
+        S.C: O(N) for the dp array
+
+        TLDR: 
+        -> Cannot rob 2 houses adjacent to each other
+        -> 2 decisions for each house
+            -> rob it 
+            -> skip it 
+        '''
+        n = len(nums)
+
+        if n == 0:
+            return -1
+        
+        if n == 1:
+            return nums[0]
+        
+        if n == 2:
+            return max(nums[0], nums[1])
+        
+        dp = [-1 for i in range(n + 1)]
+        dp[0] = nums[0]
+        dp[1] = max(nums[0], nums[1])
+
+        for i in range(2, n):
+            rob  = nums[i] + dp[i-2]
+            skip = dp[i-1]
+            dp[i] = max(rob, skip)
+        
+        return dp[n-1]
+        
