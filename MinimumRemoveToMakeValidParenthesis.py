@@ -33,3 +33,32 @@ class Solution:
         
         # converting answer to string cause in Python each time it would create a new string so using a list for appending and eventually just converting it to a string :)
         return "".join(answer)
+
+# ANOTHER WAY:
+# T.C: O(n)
+# S.C: O(n) + O(n) for the answer
+class Solution:
+    def minRemoveToMakeValid(self, s: str) -> str:
+        stack = []
+        n = len(s)
+        removeIndexes = set()
+
+        for i in range(n - 1, -1, -1):
+            element = s[i]
+            if element == ")":
+                stack.append(i)
+            if element == "(" and not stack:
+                removeIndexes.add(i)
+            elif element == "(":
+                stack.pop()
+
+        
+        
+        answer = []
+        for i, element in enumerate(s):
+            if i in removeIndexes or stack:
+                continue
+            answer.append(element)
+        
+        return "".join(answer)
+
