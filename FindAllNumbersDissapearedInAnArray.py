@@ -7,6 +7,7 @@ class Solution:
         '''
         In order to solve it using O(1) space, try using the nums space itself. If a number at index x in nums is marked as negative means that index + 1 it has been visited or exists in nums. If the value at index x in positive it means that that index + 1 has not been visited in nums. 
 
+    
 
         How do u decide to make a number at index x negative?
         iterate through each element. nums[i], new index = nums[i-1]. Go to new index and mark the element negative. BUT NOTE: it is possible that the number is already negative, so if you again mark it as negative it will be +. Therefore u operate on absolute value. Similarly when findign new index, u do abs(nums[i]) - 1. 
