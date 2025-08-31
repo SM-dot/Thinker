@@ -113,3 +113,25 @@ class Solution:
                 answer[insertionIndex] = num
         
         return len(answer)
+
+# More exlanation for bottom up added 
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        '''
+        t[i] stores the length of the longest increasing subsequence that ends at index i. This means it considers only subsequences where nums[i] is the last element.
+        Thus need to keep track of MaxLIS
+        '''
+        n = len(nums)
+        t = [1 for _ in range(n)]
+        maxLIS = 1
+
+        for i in range(n):
+            for j in range(0, i):
+                take = 0
+                if nums[j] < nums[i]:
+                    take = 1 + t[j]
+                skip = t[i]
+                t[i] = max(take, skip)
+                maxLIS = max(t[i], maxLIS)
+
+        return maxLIS
