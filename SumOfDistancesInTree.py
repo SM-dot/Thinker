@@ -48,3 +48,50 @@ class Solution:
         dfsRoot(0, -1, 0)
         dfsAll(0, -1, self.rootAnswer)
         return result
+
+# More TLDR explained version
+class Solution:
+    def sumOfDistancesInTree(self, n: int, edges: List[List[int]]) -> List[int]:
+        '''
+        Main basic idea: 
+        you go from the root and get all the depths, wehn doing this you also count the number of nodes below each node and the total number of nodes which you will obviously get from the number of nodes below the root 
+
+        Now, from the parent side, you will add +1 to all nodes, for all the nodes below you cause u moved from the parent one below to the current child you are operating on, the distacne got shorter so you subtract -1 * number of nodes below 
+
+        Now, let's code!
+        '''
+
+        adj = defaultdict(list)
+        for u,v in edges:
+            adj[u].append(v)
+            adj[v].append(u)
+        
+        self.rootDepth = 0
+        numberOfNodesBelow = [0] * n
+        result = [0] * n
+
+        def totalNodes(node, parent, depth):
+            countNodes = 1
+
+            for child in adj[node]:
+                if child != parent: 
+                    self.rootDepth += depth + 1
+                    countNodes += totalNodes(child, node, depth + 1)
+            
+            numberOfNodesBelow[node] = countNodes
+            return countNodes
+        
+        
+        def getAnswer(node, parent):
+            if node != 0:
+                result[node] = result[parent] - numberOfNodesBelow[node] + (totalNodesInGraph -  numberOfNodesBelow[node])
+
+            for child in adj[node]:
+                if child != parent: 
+                    getAnswer(child, node)
+        
+        totalNodes(0, -1, 0)
+        result[0] = self.rootDepth
+        totalNodesInGraph = numberOfNodesBelow[0]
+        getAnswer(0, -1)
+        return result
