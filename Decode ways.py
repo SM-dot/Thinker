@@ -28,7 +28,8 @@ class Solution:
                 dp[i] = 0 # not a valid path 
                 return dp[i]
             
-            only_ith_char = solve(i + 1)
+            only_ith_char = solve(i + 1) # taking only the ith character 267 -> 2, 67
+            # taking ith and (i+1)th character together 267 -> 26, 7
             ith_char_and_next_char = 0
 
             if i + 1 < n:
