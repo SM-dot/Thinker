@@ -47,4 +47,4 @@ class Solution:
                 
             
             result.append(level)
-        return result[::-1]
+        return result[::-1] # reversing the result to get bottom to top order, time complexity O(n)
