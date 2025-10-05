@@ -97,3 +97,42 @@ public:
         return false; 
     }
 };
+
+
+
+# Python Code: 
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        n = len(board)
+        m = len(board[0])
+        directions = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+
+        def search(i, j, index, visited):
+            if index >= len(word):
+                return True
+
+            if i not in range(n) or j not in range(m) or (i, j) in visited or board[i][j] != word[index]:
+                return False
+            
+            visited.add((i, j))
+
+            for dx, dy in directions:
+                r = dx + i
+                c = dy + j 
+                if search(r, c, index + 1, visited):
+                    return True
+            
+            visited.remove((i, j))
+            
+            return False 
+
+        
+        for i in range(n):
+            for j in range(m):
+                if board[i][j] == word[0]:
+                    if search(i, j, 0, set()):
+                        return True
+        return False 
+
+        
+        
