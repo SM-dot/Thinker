@@ -1,6 +1,7 @@
 # Leetcode Problem: 70. Climbing Stairs
 # Link: https://leetcode.com/problems/climbing-stairs/
 # Difficulty: Easy
+# Category: Dynamic Programming
 
 
 '''
