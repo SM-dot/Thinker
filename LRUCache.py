@@ -110,3 +110,92 @@ print(instance.get(6))
 
 
 # Rev October 17th, 2025 - not very clean and good 
+
+# More moddular code: 
+class Node:
+    def __init__(self, k = 0, v = 0):
+        self.key = k
+        self.val = v
+        self.left = None
+        self.right = None
+
+class LRUCache:
+
+    def removeBack(self):
+        lastNode = self.end.left
+        if lastNode != self.start:
+            del self.mp[lastNode.key]
+            secondLast = lastNode.left
+            secondLast.right = self.end
+            self.end.left = secondLast
+        
+    def addFront(self, node):
+        # remove from current location if key in Map
+        # put at the front of the linked list 
+        if node.key in self.mp: 
+            currLeft = node.left
+            currRight = node.right
+            if currLeft and currRight:
+                currLeft.right = currRight
+                currRight.left = currLeft
+        
+        # adding to the front of the queue
+
+        currFirst = self.start.right
+        self.start.right = node
+        node.left = self.start
+        currFirst.left = node
+        node.right = currFirst
+
+    
+    def __init__(self, capacity: int):
+        self.mp = {}
+        self.start = Node()
+        self.end = Node()
+        self.capacity = capacity
+        self.length = 0
+        self.start.right = self.end
+        self.end.left = self.start
+        
+
+    def get(self, key: int) -> int:
+        # check if key in HashMap
+        if key not in self.mp:
+            return -1
+        if key in self.mp:
+            # remove the key from current position 
+            # add the key to the front
+            self.addFront(self.mp[key])
+        # return the key value
+            return self.mp[key].val
+
+        
+
+    def put(self, key: int, value: int) -> None:
+        # Check if the key is in map
+            # remove the key from the current position
+            # add the key to the front position
+        
+        if key in self.mp:
+            self.mp[key].val = value
+            self.addFront(self.mp[key])
+        else:
+            # Create new node
+            newNode = Node(key, value)
+            self.mp[key] = newNode
+            self.addFront(newNode)
+            self.length += 1
+            # If over capacity, remove least recently used
+            if self.length > self.capacity:
+                self.removeBack()
+                self.length -= 1
+
+
+                                
+        
+
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
