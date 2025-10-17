@@ -107,3 +107,6 @@ print(instance.get(3))
 instance.put(6, 2)
 print(instance.get(1))
 print(instance.get(6))
+
+
+# Rev October 17th, 2025 - not very clean and good 
