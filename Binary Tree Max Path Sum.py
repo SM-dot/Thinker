@@ -8,6 +8,11 @@ Input: A binary tree represented by its root node
 Operations:
 - Use DFS to traverse the tree and calculate the maximum path sum
 - For each node, calculate the maximum path sum that can be formed by including the node and its left and right children
+- 3 cases are considered:   
+1. The maximum path sum including both left and right children plus the node's value
+2. The maximum path sum including either the left or right child plus the node's value
+3. The node's value alone
+
 Output: The maximum path sum in the binary tree
 T.C: O(N) where N is the number of nodes in the tree
 S.C: O(H) for the recursion stack, where H is the height of the tree
