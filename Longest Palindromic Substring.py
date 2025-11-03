@@ -77,3 +77,64 @@ class Solution:
             
 
         return s[startingPoint: startingPoint + maxLen]
+    
+
+# Manacher's Algorithm (Optimal O(N) Solution)
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        '''
+        Manachers Algorithm: 
+        Basically uses the property of a palindrome that it is the mirror on both sides. 
+        Time Complexity: O(N)
+        Space Complexity: O(N)
+        
+        STEP 1:
+        you have an array that keeps track of the length of the longest palindrome
+        add # between each character. Why?
+        MOM -> centered at O
+        ABBA -> centre of palindrome is BB
+        A#B#B#A -> centre is not the #
+        M#0#M -> centre is O
+        This basically takes care of palindromes of even and odd length
+
+
+        STEP 2: 
+        initially, centre = 0, right most boundary of longets palindrom found = 0 
+        a.k.a centre = 0, right = 0
+        now iterate through each character
+        if our current character is inside the boundary of a palindrome we had found, then we can simply copy the mirror value. here we select the minimum of mirror value and right - i, cause we do not know beyond the right boundary 
+
+      
+        if we are not inside a palidnrome, we exapand and find the palindrome
+
+        At last we check if we found a longer palindrome, that means our right boundary stretches and we update it. 
+        '''
+        s = "^#" + "#".join(s) + "#$"
+    
+        P = [0] * len(s)      # P[i] = radius of palindrome centered at i
+        center = 0            # Center of the rightmost palindrome
+        right = 0             # Right boundary of the rightmost palindrome
+        
+        # Step 2: Fill P array
+        for i in range(1, len(s) - 1):
+            # If inside current right boundary, use mirror to skip work
+            if i < right:
+                mirror = 2 * center - i
+                P[i] = min(right - i, P[mirror])
+            
+            # Expand around center i
+            while s[i + P[i] + 1] == s[i - P[i] - 1]:
+                P[i] += 1
+            
+            # Update the rightmost boundary if we expanded further
+            if i + P[i] > right:
+                center = i
+                right = i + P[i]
+        
+        max_len = max(P)
+        center_idx = P.index(max_len)
+        
+        # Extract and clean the palindrome
+        start = center_idx - max_len
+        end = center_idx + max_len + 1
+        return s[start:end].replace("#", "")
