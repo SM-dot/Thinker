@@ -73,3 +73,29 @@ int main() {
 
     return 0;
 }
+
+
+/**
+Python Code: 
+from collections import defaultdict 
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        MyMap = defaultdict(list)
+
+        def anagram_converter(word):
+            arr = [0] * 26
+
+            for letter in word: 
+                arr[ord(letter) - ord('a')] += 1
+            
+            return arr
+
+        for word in strs:
+            result = anagram_converter(word)
+            MyMap[tuple(result)].append(word)
+        
+        return [v for k, v in MyMap.items()]
+
+
+
+*/
