@@ -34,7 +34,7 @@ class Solution:
         # one of the initial increments would have incrmeented this curr already so we do not need to add it in. 
         # therefore these are the conditions 
         # if even decrements were allowed then you would have to use absolute while comparing the prev and curr, you would be doing this on the differnece array of initial and target. 
-        # see leetcode 3299 for more clarity 
+        # see leetcode 3229 for more clarity 
 
         prev = 0
         n = len(target)
