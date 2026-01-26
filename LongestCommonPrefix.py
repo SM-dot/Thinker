@@ -36,3 +36,17 @@ class Solution:
             else:
                 return result 
         return result 
+
+
+# METHOD 2: O(N*M) thats better 
+        # Vertical scanning 
+
+        result = ""
+        if len(strs) < 2:
+            return strs[0]
+        for i in range(len(strs[0])):
+            for word in strs[1:]:
+                if i == len(word) or strs[0][i] != word[i]:
+                    return result 
+            result += strs[0][i] 
+        return result
