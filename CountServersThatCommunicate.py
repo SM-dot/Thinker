@@ -39,7 +39,7 @@ class Solution:
         return len(comms)
 
 
-# Optimized Approach without using extra space for row and column mappings
+# Slightly Optimized Approach without using extra space for row and column mappings
 # Time Complexity: O(m * n), where m is the number of rows and n is the number of columns in the grid.
 # Space Complexity: O(m + n) for storing the row and column counts.
 
