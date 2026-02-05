@@ -54,3 +54,49 @@ class Solution:
         return answer
 
 # Git Ver
+# BFS SOLUTION: 
+class Solution:
+    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+        # VERY IMPORTANT NOTE: NEED TO TREAT ANSWER AS LIST BECUASE IN PYTHON FLOATS ARE IMMUTABLE THAT MEANS PASS BY VALUE ONLY, NOT REFERENCE AND HERE WE NEED REFERENCE 
+        adj = defaultdict(list)
+
+        n = len(values)
+
+        for i in range(n):
+            a = equations[i][0]
+            b = equations[i][1]
+            val = values[i]
+            adj[a].append((b, val))
+            adj[b].append((a, 1/val))
+
+        
+        def bfs(src, dest):
+            q = deque()
+            q.append((src, 1))
+            visited = set()
+            visited.add(src)
+            answer = -1
+
+            while q:
+                node, prod = q.popleft()
+
+                if node == dest:
+                    return prod
+
+                for nextNode, val in adj[node]:
+                    if nextNode not in visited:
+                        q.append((nextNode, prod*val))
+                        visited.add(nextNode)
+            return answer 
+ 
+        
+        result = []
+        for src, dest in queries:
+            ans = [-1.0]
+            prod = 1
+            if src not in adj or dest not in adj:
+                result.append(ans[0])
+            else:
+                answer = bfs(src, dest)
+                result.append(answer)
+        return result
