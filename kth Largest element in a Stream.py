@@ -44,3 +44,44 @@ print(kthLargest.add(9))   # returns 8
 print(kthLargest.add(4))   # returns 8    
 
 # REV oct 7, 2025
+
+class KthLargest:
+    '''
+    Ussually a wya to ratta to know when to use min heap or max heap is to use the opposite of what it is asking. So if it is asking largest use a min heap, if it is asking smallest use a max heap. 
+
+    Another way:
+    u know top of min heap has smallest value, to find the largest u want to pop small values so u use min heap
+
+    u know top of max heap has largest value, to fidn the smallest u want to pop large values so u use max heap.
+
+    Ok, here u add to the min heap, if the heap size exceeds k u pop. The top of the heap would have the third/ k largest element cause the bottom in a min heapo has the largets and the top has the smallest. 
+
+    Heaop operations and time compelxity:
+    heapify = O(n)
+    inserting into a heap = O(logn)
+    removing from a heap = O(logn)
+    Now let's code!!! 
+    '''
+
+    def __init__(self, k: int, nums: List[int]):
+        self.k = k
+        self.nums = nums
+        heapq.heapify(self.nums)
+        
+        while len(self.nums) > self.k:
+            heapq.heappop(self.nums)
+
+    def add(self, val: int) -> int:
+        heapq.heappush(self.nums, val)
+
+        if len(self.nums) > self.k:
+            heapq.heappop(self.nums)
+        return self.nums[0]
+        
+
+
+# Your KthLargest object will be instantiated and called as such:
+# obj = KthLargest(k, nums)
+# param_1 = obj.add(val)
+
+#REV FEB 3 2026 
