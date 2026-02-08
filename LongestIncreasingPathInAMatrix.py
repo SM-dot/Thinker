@@ -74,3 +74,51 @@ Key Takeaways:
                 self.answer = max(self.answer, dfs(i, j, set()))
         
         return self.answer 
+
+
+# CORRECT APPROACH:
+class Solution:
+    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
+        # NOTE: THIS IS THE BRUTE FORCE SOLUTION. YOU DO NOT NEED A VISISTED FOR THIS QUESTION BECAUSE THE GREATER THAN PART OF THE QUESTION WILL TAKE CARE OF IT
+        # THE TC FOR THIS BRUTE FORCE SOLTUION IS: O(n*m * 4^n)
+        # Ok, the 4^n comes from the fact that in the dfs for each cell in the path u visit 4 directions
+        # the n*m part comes simply from the fact that u are visiting each cell 
+        # ok.
+        # Now, when u do a DP
+        # for each cell in the DFS u are just checking 4 directions so it becomes 4
+        # and totoal TC become O(4*n*m) =O(n*m)
+        # easy peasy lemon squeexyyyyyyyyyyy
+        # TC: O(n*m) for the DP solution, where n and m are the dimensions of the matrix. Each cell is computed once, and each DFS explores at most 4 neighbors.
+        # Space Complexity: O(n*m) for the DP table and O(n*m) for the recursion stack in the worst case (when the path takes us through all cells in a linear manner
+        n = len(matrix)
+        m = len(matrix[0])
+        answer = 1
+        directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+        dp = [[-1 for _ in range(m)] for _ in range(n)]
+
+
+        def pathLength(i, j):
+            if dp[i][j] != -1:
+                return dp[i][j]
+
+            length = 1
+
+            for dr, dc in directions:
+                nr = dr + i 
+                nc = dc + j 
+
+                if nr in range(n) and nc in range(m) and matrix[nr][nc] > matrix[i][j]:
+                    length = max(length, 1 + pathLength(nr, nc))
+
+            dp[i][j] = length
+            return dp[i][j]
+            
+        
+
+        for i in range(n):
+            for j in range(m):
+                pL = pathLength(i, j)
+                if pL > answer:
+                    answer = pL
+
+        return answer
