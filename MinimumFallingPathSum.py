@@ -30,3 +30,29 @@ class Solution:
             dp = new_dp
 
         return min(dp)
+    
+class Solution:
+    def minFallingPathSum(self, matrix: List[List[int]]) -> int:
+        n = len(matrix)
+        m = len(matrix[0])
+        dp = [[float('inf') for _ in range(m + 1)] for _ in range(n + 1)]
+
+        # basiclaly for any cell starting from the second row, the first row is populated, in the path in the second row take the smallest from the first row that can reach that cell
+        # populate the dp
+        for j in range(m):
+            dp[0][j] = matrix[0][j]
+        
+        for i in range(1, n):
+            for j in range(m):
+                dp[i][j] = matrix[i][j] 
+                minval = dp[i-1][j]
+                if j - 1 >= 0:
+                    minval = min(minval, dp[i-1][j - 1])
+                if j + 1 < m:
+                    minval = min(minval, dp[i-1][j+1])
+                dp[i][j] += minval
+        
+        answer = float('inf')
+        for col in range(m):
+            answer = min(dp[n - 1][col], answer)
+        return answer 
