@@ -75,6 +75,7 @@ Space complexity: O(n^2 * k) for the dp hashmap, which stores the probability of
 The time complexity is the same as the 3D array memoization solution, but the space complexity can be more efficient in practice, as we only store entries for the states that are actually computed during the recursion, rather than pre-allocating a large 3D array.
 We are essentially jsut keeping track of visited states so in some scenrious it can be better 
 the worse case is still the same. 
+ONLY sometimes it can be smaller but in worse case it is still the same. 
 '''
 class Solution:
     def knightProbability(self, n: int, k: int, row: int, column: int) -> float:
