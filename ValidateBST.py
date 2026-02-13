@@ -46,6 +46,11 @@ class Solution:
   '''
   We know that the inorder traversal of a BST gives us a sorted order. So we simply get the inorder traversal and see if it is sorted with a strictly increasing value
   '''
+
+# This does an inorder traversal but does not take any extra space cause we keep track of the previous value seen in the inorder traversal, if we see a value that is less than or equal to the previous value then we know it is not a BST.
+# it is crucial to keep self.prev as a global variable because we need to keep track of the previous value across all recursive calls, if we use a local variable it would not work as it would be reset in each recursive call.
+# cause note if just get the prev of the root, it is possible that that small tree is a BST but the right subtree of the root has a value that is less than the root, thus we need to keep track of the prev value across all recursive calls.
+
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         order = []
@@ -65,3 +70,34 @@ class Solution:
             if not order[i - 1] < order[i]:
                 return False
         return True
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        # if a BST is a BST then an inorder traversal of a BST would give us a sorted array. 
+
+        self.prev = float('-inf')
+        def inorder(root):
+            if not root: 
+                return True 
+            
+            if not inorder(root.left):
+                return False 
+            
+            if root.val <= self.prev:
+                return False 
+            self.prev = root.val
+
+            return inorder(root.right)
+        
+        return inorder(root)
+        
+
+            
+            
