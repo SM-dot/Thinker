@@ -101,3 +101,54 @@ class Solution:
 
             
             
+
+'''
+# EXPLANATION:
+The "Chain of Trust"
+
+For any given node to be part of a valid BST, three specific conditions must be true:
+
+Faith in the Left: The entire left subtree must be a valid BST.
+
+The Current Node: The current node must be greater than the last value we saw (self.prev).
+
+Faith in the Right: The entire right subtree must be a valid BST.
+
+The Breakdown of the Code
+
+Python
+def inorder(node):
+    if not node: 
+        return True # Base Case: An empty tree is technically a valid BST.
+
+    # 1. TEST THE LEFT: "I have faith that this call will tell me if 
+    # the entire left side is valid."
+    if not inorder(node.left):
+        return False # If my faith was met with a 'False', the whole tree is ruined.
+
+    # 2. TEST THE CURRENT: This is the only part I am manually checking.
+    if node.val <= self.prev:
+        return False
+    self.prev = node.val # Update the 'global' last-seen value.
+
+    # 3. TEST THE RIGHT: "I have faith that the right side knows 
+    # if it's valid or not."
+    return inorder(node.right) 
+Why we MUST return the Right Call
+
+If you just wrote inorder(node.right) without the return, you are basically saying:
+
+"Hey Right Subtree, go check yourself... but I don't actually care what you find out. I'm not going to report your answer back to my boss."
+
+Because the Right Subtree is the last thing that happens in an In-order traversal, its result is the "final verdict" for that entire branch of the tree.
+
+If the right subtree is valid, it returns True.
+
+If it's invalid, it returns False.
+
+By saying return inorder(node.right), you are passing that final verdict up the chain to the parent node.
+
+The "Leap of Faith" Summary
+
+If the Left is valid (True) AND the Current node is valid, then the validity of the entire current tree depends entirely on whether the Right subtree is valid.
+'''
