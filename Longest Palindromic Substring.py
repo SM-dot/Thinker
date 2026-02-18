@@ -138,3 +138,39 @@ class Solution:
         start = center_idx - max_len
         end = center_idx + max_len + 1
         return s[start:end].replace("#", "")
+    
+
+    class Solution:
+    def countSubstrings(self, s: str) -> int:
+        '''
+        Palindromic substring bottom up approach: 
+        1. for a single length string yes it is a palindrome
+        2. for a double length string it is paldindrome if s[i] == s[j]
+        3. for all other string lengths > 2
+            it is a palindrome if s[i] == s[j] and the middle of the string is also a palindrome 
+            so essentially s[i + 1:j] is a palindrome 
+        
+        ok, also you are going to find all the palindromic lenghts, so u starts for lengths 1, 2, 3, and for each of these lengths u start at index i. so from index 1 a string of length 2, from index 2 a string of length 2 etc. 
+        and the length u can check till is gonna be i + L - 1 this is also ur J 
+        '''
+        n = len(s)
+        dp = [[False for _ in range(n)] for _ in range(n)]
+        count = 0
+
+        for L in range(1, n + 1):
+            for i in range(0, n - L + 1):
+                j = i + L - 1 
+                if i == j:
+                    dp[i][j] = True 
+                
+                elif i + 1 == j:
+                    dp[i][j] = s[i] == s[j]
+                
+                else:
+                    dp[i][j] = s[i] == s[j] and dp[i + 1][ j - 1]
+                
+                if dp[i][j] == True:
+                    count += 1
+        return count 
+                
+                
