@@ -5,6 +5,10 @@
 
 class Bitset:
     '''
+    The main idea is to keep track of the flipped state of the bits and the count of ones in the bitset.
+    Time Complexity: O(1) for all operations except toString which is O(n) where n is the size of the bitset.
+    Space Complexity: O(n) for storing the bits in the bitset.
+    
     2 crucial facts to know that 
     XOR with 1 gives a flipped bit 
     1 xor 1 = 0
