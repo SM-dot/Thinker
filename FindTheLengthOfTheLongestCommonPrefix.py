@@ -49,3 +49,63 @@ elements in the longer array and m is the average length of the numbers in the a
                 result = max(result, getNumberLength(num))
         
         return result 
+
+
+
+# Trie Implmentation Added: 
+# Time and space complexity of this code is the most optimized 
+# Tc: O(n*m) where n is the number of elements in the longer array and m is the average length of the numbers in the arrays. This is because we are inserting each element of the longer array into the trie, which takes O(m) time in the worst case, and then we are searching for each element of the shorter array in the trie, which also takes O(m) time in the worst case.
+# Sc: O(n*m) in the worst case, where n is the number of elements
+# in the longer array and m is the average length of the numbers in the arrays. This is because in the worst case, each element of the longer array could have a unique prefix of length m, leading to a trie with n*m nodes.
+class TrieNode: 
+    def __init__(self):
+        self.children = {}
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        currRoot = self.root
+        word = str(word)
+
+        # kinda redundant here, not the best code written 
+        for letter in word: 
+            if letter in currRoot.children: 
+                currRoot = currRoot.children[letter]
+            else:
+                currRoot.children[letter] = TrieNode()
+                currRoot = currRoot.children[letter]
+    
+    def search(self, word):
+        # this is not a regular search we only keep on adding till the prefix allows 
+        # this function returns the length thatw e found common, otherwise it returns 0 if nothing is common
+        currRoot = self.root 
+        word = str(word)
+        answer = 0
+
+        for letter in word: 
+            if letter in currRoot.children: 
+                answer += 1 
+                currRoot = currRoot.children[letter]
+            else: 
+                break 
+        return answer 
+class Solution:
+    def longestCommonPrefix(self, arr1: List[int], arr2: List[int]) -> int:
+        '''
+        Now trying the Trie Implmentation
+        For a Trie implementation we need 2 things here: 
+        1. Insertion 
+        2. Search or finding the most common prefix/ we can also call this the search feature for consistency, this is just modifying the existing Trie implementation, slight modifications to that code can lead to the answer
+        '''
+        myTrie = Trie()
+        result  = 0
+
+        for num in arr1: 
+            myTrie.insert(num)
+        
+        for num in arr2: 
+            result = max(result, myTrie.search(num))
+        
+        return result 
