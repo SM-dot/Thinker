@@ -66,3 +66,66 @@ class Solution:
             i = j 
         
         return result 
+
+
+class Solution:
+    def fullJustify(self, words: List[str], maxWidth: int) -> List[str]:
+        
+        def buildLine(i, j, spaceCount, extraSpaces):
+            line = ""
+
+            for k in range(i, j):
+                line += words[k]
+
+                if k < j - 1:
+                    # base spaces
+                    line += " " * spaceCount
+                    
+                    # add ONE extra space if available
+                    if extraSpaces > 0:
+                        line += " "
+                        extraSpaces -= 1
+
+            # handle single word case (pad right)
+            while len(line) < maxWidth:
+                line += " "
+
+            return line
+        
+        def buildLastLine(i, j):
+            # left justified: single space between words
+            line = " ".join(words[i:j])
+            
+            # pad remaining spaces at end
+            return line + " " * (maxWidth - len(line))
+        
+        n = len(words)
+        i = 0
+        answer = []
+
+        while i < n:
+            j = i + 1
+            currWidth = len(words[i])
+            spaceHolderCount = 0
+
+            while j < n and currWidth + len(words[j]) + 1 <= maxWidth:
+                spaceHolderCount += 1
+                currWidth += len(words[j]) + 1
+                j += 1
+            
+            blanksLeft = maxWidth - currWidth
+
+            if j == n:
+                answer.append(buildLastLine(i, j))
+            else:
+                if spaceHolderCount == 0:
+                    # single word line
+                    answer.append(words[i] + " " * blanksLeft)
+                else:
+                    eachSpaceLength = blanksLeft // spaceHolderCount
+                    extraSpaces = blanksLeft % spaceHolderCount
+                    answer.append(buildLine(i, j, eachSpaceLength + 1, extraSpaces))
+            
+            i = j
+        
+        return answer
