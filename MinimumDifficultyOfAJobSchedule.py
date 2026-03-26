@@ -55,4 +55,6 @@ class Solution:
             
 
 
-        
+'''
+think of it like including everything in your day one 
+'''
