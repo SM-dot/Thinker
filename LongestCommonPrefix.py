@@ -50,3 +50,32 @@ class Solution:
                     return result 
             result += strs[0][i] 
         return result
+    
+    class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        # METHOD 3: 
+        # Time complexity: O(N*M) where N is number of strings and M is the length of the smallest string
+        # Space complexity: O(1)
+        prefix = strs[0]
+        n = len(strs)
+
+        def findCommon(w1, w2):
+            result = ""
+            n = min(len(w1), len(w2))
+
+            for i in range(n):
+                if w1[i] != w2[i]:
+                    return result 
+                result += w1[i]
+            return result 
+            
+        for i in range(1, n):
+            word = strs[i]
+
+            newPrefix = findCommon(prefix, word)
+            prefix = newPrefix
+        
+        return prefix
+
+
+# rev April 23rd 2026
