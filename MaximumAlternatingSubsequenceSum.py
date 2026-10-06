@@ -101,3 +101,37 @@ class Solution:
 # RV AUG 11, 2025
 # RV AUG 31, 2025
 # RV FEB 23, 2026 
+
+
+class Solution:
+    def maxAlternatingSum(self, nums: List[int]) -> int:
+        '''
+        Think fo bottom up as creating a subsequence of even length or odd length. when u add an element to the subsequence, that subsequence can either become even or odd. You then want to decide to take or skip it. 
+
+        0 => adding this elemenmt creates an even length subsequence
+        1 => adding this elemeent creates an odd length subsequence 
+
+
+        MAJOR NOTE: 
+        The for loop runs from 1 to n + 1
+        cause u would have noticed that in the indexes we would have to put i - 1 which would create a negative index which is something we do not want, so we start the index from 1 and create our dp length till n + 1. So in the end for the last element we no longer need to submit n - 1 we can submit n 
+
+        NOTE DP indexing works with the +1 index effect but the nums indexing is still 0 based. 
+
+        Time complexity is O(n)
+        Space complexity of this is O(2n) = O(n) this is cause of the do array that we created. 
+        '''
+        n = len(nums)
+        t = [[0 for _ in range(2)] for _ in range(n + 1)]
+
+        for i in range(1, n + 1):
+            # creating an EVEN length subsequence 
+            # basically if adding an element makes our subsequence even, that means till now we have to see the odd length till now that is why in the take case we have 1, if we skip and continue creating an even length subsequence then we store the value of the subsequence at the last even index 
+                                            # take, skip
+            t[i][0] = max(t[i-1][1] - nums[i - 1], t[i-1][0])
+
+            # creating an ODD length subsequence
+            t[i][1] = max(t[i-1][0] + nums[i - 1], t[i - 1][1])
+
+        
+        return max(t[n][0], t[n][1])
