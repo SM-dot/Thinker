@@ -77,3 +77,29 @@ class Solution:
         return maxLIS
 
 # REV Aug 11th, 2025 
+
+class Solution:
+    def longestStrChain(self, words: list[str]) -> int:
+        '''
+        So if we did LIS, what we were doing was checking the words over and over again, instead of checking if each word is a predecessor what we can do is take a better approach at this. 
+
+        We can store all the words in a hashmap and avoid the O(n sqaure setting). So we basically say of we drop a character is that in our dp and what is the max subsequence that exists with it and we add that to the number of subsequences. 
+
+        Now lets code 
+        '''
+        words.sort(key = lambda x: len(x))
+        dp = {}
+        longest = 1 
+        
+        for word in words: 
+            currMax = 1
+
+            for k in range(len(word)):
+                new_word = word[:k] + word[k + 1:]
+                if new_word in dp:
+                    currMax = max(currMax, 1 + dp[new_word])
+            
+            dp[word] = currMax
+            longest = max(longest, dp[word])
+        
+        return longest 
