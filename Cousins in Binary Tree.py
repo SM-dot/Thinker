@@ -48,3 +48,52 @@ class Solution:
 
 
 
+# Another approach: 
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isCousins(self, root: TreeNode | None, x: int, y: int) -> bool:
+        '''
+        2 criterias for cousin:
+        1. both are on the same level 
+        2. both of them have different parents, if same parents then they are siblings!!!! 
+        hehehehe, so not that straightforward ened to keep track of the parent as well. 
+        Can probably do a dfs and find the x, y node and the parent as well. 
+        or do bfs and keep track od the node information. 
+
+        Now let's code 
+        '''
+        q = deque()
+        q.append([root, -1])
+        foundX = False 
+        foundY = False 
+
+
+        while q:
+            k = len(q)
+            for i in range(k):
+                node, parent = q.popleft()
+
+                if node.val == x:
+                    xParent = parent
+                    foundX = True 
+                
+                if node.val == y:
+                    yParent = parent 
+                    foundY = True 
+                
+                if node.left:
+                    q.append([node.left, node])
+                
+                if node.right: 
+                    q.append([node.right, node])
+
+            if foundX and foundY:
+                return yParent != xParent
+            if foundX or foundY:
+                return False 
+                    
