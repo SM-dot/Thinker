@@ -48,3 +48,62 @@ class Solution:
 
         dfs(0, -1)
         return result 
+
+
+
+class Solution:
+    def longestPath(self, parent: list[int], s: str) -> int:
+        '''
+        okie tokie, so this one is very similar to max path sum. 
+
+        Few things to note here is that this is not a tree so u just do not chekc left or right child. You have to check all the children paths. Now, if you are doing that how are you keepping track of which paths lead to the best answer, you need left and right equivalent. For that you keep longest and second longest number in memory and then send accordingly. 
+
+        This is a gonna be a DFS, so O(V + E) is going to be the time and space complexity of this code. 
+        
+        Now lets code
+        '''
+        adj = defaultdict(list)
+        n = len(parent)
+        answer = ""
+
+        def solve(node, parent):
+            largest = ""
+            secondLargest = ""
+            nonlocal answer 
+            
+            for child in adj[node]:
+                if child == parent: 
+                    continue 
+
+                getChildPath = solve(child, node)
+                
+                # it is very very important for our code to have this check after we have called the function on the child node cause what if in the child tree is where our longest path lies, so u are technically only skipping it if it is a adjacent, but u still need to excplore that tree if it makes sense 
+                if s[child] == s[node]:
+                    continue
+
+                if len(getChildPath) > len(secondLargest):
+                    secondLargest = getChildPath
+                
+                if len(secondLargest) > len(largest):
+                    secondLargest, largest = largest, secondLargest
+                
+            case1 = s[node]
+            case2 = s[node] + largest
+            case3 = largest[::-1] + s[node] + secondLargest
+
+            current_best = max([case1, case2, case3], key=len)
+            if len(current_best) > len(answer):
+                answer = current_best
+            return case2
+                
+
+        for i in range(1, n):
+            u = i
+            v = parent[i]
+
+            adj[u].append(v)
+            adj[v].append(u)
+
+        solve(0, -1)
+        print(answer)
+        return len(answer)
