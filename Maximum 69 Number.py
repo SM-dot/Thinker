@@ -15,3 +15,20 @@ class Solution:
                 break
         
         return int("".join(num))
+
+
+#time complexity: O(logN) where N is the number of digits in the number
+#space complexity: O(1)
+class Solution:
+    def maximum69Number (self, num: int) -> int:
+        # more optimal solution not O(N) ANYMORE this will be in logarithmic time. 
+        place = 1
+        numCopy = num
+        best = 0
+        while num: 
+            if num % 10 == 6:
+                best = place
+            num = num // 10
+            place *= 10
+        
+        return numCopy + (3 * best)
