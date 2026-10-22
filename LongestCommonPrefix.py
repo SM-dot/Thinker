@@ -79,3 +79,22 @@ class Solution:
 
 
 # rev April 23rd 2026
+
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        '''
+        One method could be to sort it and then find the commmon prefix between the first and last word. 
+        nlogn would be tc
+
+
+        another O(n) approach would be to fix the first word and then go through all the other words and if any of the index positions dont match then return. 
+        '''
+        firstWord = strs[0]
+        restOfTheWords = strs[1:]
+
+        for i in range(len(firstWord)):
+            ch = firstWord[i]
+            for otherWords in restOfTheWords:
+                if i >= len(otherWords) or ch != otherWords[i]:
+                    return firstWord[:i]
+        return firstWord
