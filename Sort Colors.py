@@ -32,5 +32,40 @@ class Solution:
                 nums[i] = num
                 i += 1
                 hm[num] -= 1
+
+
+class Solution:
+    def sortColors(self, nums: list[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        count = defaultdict(int)
+
+        for num in nums:
+            count[num] += 1
+        
+        fill = 0
+
+        # filling 0 first 
+        whiteFill = count[0]
+        while whiteFill:
+            nums[fill] = 0
+            whiteFill -= 1
+            fill += 1
+        
+        # filling 1 now
+        redFill = count[1]
+        while redFill:
+            nums[fill] = 1
+            redFill -= 1
+            fill += 1
+
+        blueFill = count[2]
+        while blueFill: 
+            nums[fill] = 2
+            blueFill -= 1
+            fill += 1
+
+
         
         
