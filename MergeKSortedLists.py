@@ -94,4 +94,5 @@ class Solution:
         return partition(0, len(lists) - 1)
 
 
-        
+
+# REV November 15th, 2026
