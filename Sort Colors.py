@@ -64,8 +64,7 @@ class Solution:
         while blueFill: 
             nums[fill] = 2
             blueFill -= 1
-            fill += 1
+            fill += 1        
 
 
-        
-        
+# rev november 16th, 2026 
